@@ -113,11 +113,9 @@ This includes direct, indirect, incidental, consequential, special, or punitive 
         </div>
       </section>
 
-      {/* Content Section */}
       <section className="py-16 xs:py-12">
         <div className="container mx-auto px-6 xs:px-4">
           <div className="max-w-5xl mx-auto">
-            {/* Introduction */}
             <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-3xl xs:rounded-2xl p-10 xs:p-6 mb-8 xs:mb-6 animate-fade-in hover:bg-white/10 hover:border-white/20 transition-all duration-500">
               <h2 className="text-3xl xs:text-2xl font-bold mb-6 xs:mb-4">Introduction</h2>
               <p className="text-gray-400 mb-4 xs:mb-3 leading-relaxed text-base xs:text-sm">
@@ -128,14 +126,12 @@ This includes direct, indirect, incidental, consequential, special, or punitive 
               </p>
             </div>
 
-            {/* Main Sections */}
             <div className="space-y-8 xs:space-y-6">
               {sections.map((section, index) => (
                 <div
                   key={index}
                   className="group bg-white/5 backdrop-blur-sm border border-white/10 rounded-3xl xs:rounded-2xl p-10 xs:p-6 hover:bg-white/10 hover:border-white/20 transition-all duration-500 animate-fade-in"
-                  style={{ animationDelay: `${index * 100}ms` }}
-                >
+                  style={{ animationDelay: `${index * 100}ms` }}>
                   <div className="flex items-start gap-6 xs:gap-4 mb-6 xs:mb-4">
                     <div className="flex-shrink-0 bg-white/10 p-4 xs:p-3 rounded-2xl xs:rounded-xl group-hover:bg-white/20 group-hover:scale-110 transition-all duration-300">
                       {section.icon}
@@ -151,7 +147,6 @@ This includes direct, indirect, incidental, consequential, special, or punitive 
               ))}
             </div>
 
-            {/* Additional Terms */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 xs:gap-4 mt-8 xs:mt-6">
               <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl xs:rounded-xl p-6 xs:p-5 hover:bg-white/10 hover:border-white/20 transition-all duration-300 animate-fade-in">
                 <h3 className="text-xl xs:text-lg font-bold mb-4 xs:mb-3">Service Modifications</h3>
@@ -180,7 +175,6 @@ This includes direct, indirect, incidental, consequential, special, or punitive 
               </div>
             </div>
 
-            {/* User Responsibilities */}
             <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-sm border border-white/10 rounded-3xl xs:rounded-2xl p-10 xs:p-6 mt-8 xs:mt-6 animate-fade-in hover:border-white/20 transition-all duration-500">
               <h3 className="text-3xl xs:text-2xl font-bold mb-6 xs:mb-4">User Responsibilities</h3>
               <p className="text-gray-400 mb-6 xs:mb-4 text-base xs:text-sm leading-relaxed">
@@ -195,8 +189,7 @@ This includes direct, indirect, incidental, consequential, special, or punitive 
                 ].map((responsibility, index) => (
                   <div 
                     key={index}
-                    className="bg-black/40 backdrop-blur-sm border border-white/5 p-5 xs:p-4 rounded-xl xs:rounded-lg hover:border-white/10 transition-all"
-                  >
+                    className="bg-black/40 backdrop-blur-sm border border-white/5 p-5 xs:p-4 rounded-xl xs:rounded-lg hover:border-white/10 transition-all">
                     <h4 className="font-bold mb-2 xs:mb-1.5 text-base xs:text-sm">{responsibility.title}</h4>
                     <p className="text-gray-400 text-sm xs:text-xs">{responsibility.desc}</p>
                   </div>
@@ -204,7 +197,6 @@ This includes direct, indirect, incidental, consequential, special, or punitive 
               </div>
             </div>
 
-            {/* Limitation of Liability */}
             <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-3xl xs:rounded-2xl p-10 xs:p-6 mt-8 xs:mt-6 animate-fade-in hover:bg-white/10 hover:border-white/20 transition-all duration-500">
               <h3 className="text-3xl xs:text-2xl font-bold mb-4 xs:mb-3">Limitation of Liability</h3>
               <p className="text-gray-400 mb-4 xs:mb-3 text-base xs:text-sm leading-relaxed">
@@ -219,7 +211,6 @@ This includes direct, indirect, incidental, consequential, special, or punitive 
               </ul>
             </div>
 
-            {/* Governing Law */}
             <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-3xl xs:rounded-2xl p-10 xs:p-6 mt-8 xs:mt-6 animate-fade-in hover:bg-white/10 hover:border-white/20 transition-all duration-500">
               <h3 className="text-3xl xs:text-2xl font-bold mb-4 xs:mb-3">Governing Law</h3>
               <p className="text-gray-400 mb-4 xs:mb-3 text-base xs:text-sm leading-relaxed">
@@ -230,7 +221,6 @@ This includes direct, indirect, incidental, consequential, special, or punitive 
               </p>
             </div>
 
-            {/* Changes to Terms */}
             <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-3xl xs:rounded-2xl p-10 xs:p-6 mt-8 xs:mt-6 animate-fade-in hover:bg-white/10 hover:border-white/20 transition-all duration-500">
               <h3 className="text-3xl xs:text-2xl font-bold mb-4 xs:mb-3">Changes to Terms</h3>
               <p className="text-gray-400 mb-4 xs:mb-3 text-base xs:text-sm leading-relaxed">
@@ -241,7 +231,6 @@ This includes direct, indirect, incidental, consequential, special, or punitive 
               </p>
             </div>
 
-            {/* Contact Section */}
             <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-sm border border-white/10 rounded-3xl xs:rounded-2xl p-10 xs:p-6 mt-8 xs:mt-6 text-center animate-fade-in hover:border-white/20 transition-all duration-500">
               <h3 className="text-3xl xs:text-2xl font-bold mb-4 xs:mb-3">Questions About Terms?</h3>
               <p className="text-gray-400 mb-8 xs:mb-6 text-base xs:text-sm max-w-2xl mx-auto">
@@ -250,16 +239,14 @@ This includes direct, indirect, incidental, consequential, special, or punitive 
               <div className="flex flex-col xs:flex-col sm:flex-row gap-4 xs:gap-3 justify-center">
                 <a
                   href="mailto:legal@waguroom.com"
-                  className="px-8 xs:px-6 py-4 xs:py-3 bg-white text-black rounded-xl xs:rounded-lg font-semibold text-base xs:text-sm hover:bg-gray-100 transition-all duration-300 hover:scale-105 w-full sm:w-auto"
-                >
+                  className="px-8 xs:px-6 py-4 xs:py-3 bg-white text-black rounded-xl xs:rounded-lg font-semibold text-base xs:text-sm hover:bg-gray-100 transition-all duration-300 hover:scale-105 w-full sm:w-auto">
                   Email Legal Team
                 </a>
                 <a
-                  href="https://discord.com"
+                  href="https://discord.gg/MwNE7Vfb6t"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="px-8 xs:px-6 py-4 xs:py-3 bg-white/5 backdrop-blur-sm border-2 border-white/20 rounded-xl xs:rounded-lg font-semibold text-base xs:text-sm hover:bg-white/10 transition-all duration-300 hover:scale-105 w-full sm:w-auto"
-                >
+                  className="px-8 xs:px-6 py-4 xs:py-3 bg-white/5 backdrop-blur-sm border-2 border-white/20 rounded-xl xs:rounded-lg font-semibold text-base xs:text-sm hover:bg-white/10 transition-all duration-300 hover:scale-105 w-full sm:w-auto">
                   Discord Support
                 </a>
               </div>

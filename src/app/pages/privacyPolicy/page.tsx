@@ -205,7 +205,7 @@ To exercise these rights, contact us through our Discord server or email support
                   Email Support
                 </a>
                 <a
-                  href="https://discord.com"
+                  href="https://discord.gg/MwNE7Vfb6t"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="px-8 xs:px-6 py-4 xs:py-3 bg-white/5 backdrop-blur-sm border-2 border-white/20 rounded-xl xs:rounded-lg font-semibold text-base xs:text-sm hover:bg-white/10 transition-all duration-300 hover:scale-105 w-full sm:w-auto">

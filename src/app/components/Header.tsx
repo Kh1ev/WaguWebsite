@@ -45,8 +45,7 @@ export default function Header() {
         isScrolled
           ? 'bg-black/95 backdrop-blur-xl border-b border-white/10 shadow-lg shadow-black/50'
           : 'bg-transparent'
-      }`}
-    >
+      }`}>
       <nav className="container mx-auto px-6 xs:px-4 py-4 xs:py-3">
         <div className="flex items-center justify-between">
           <Link href="/" className="flex items-center gap-3 xs:gap-2 group">
@@ -71,7 +70,7 @@ export default function Header() {
               </Link>
             ))}
             <a
-              href="https://discord.com"
+              href="https://discord.gg/MwNE7Vfb6t"
               target="_blank"
               rel="noopener noreferrer"
               className="group relative px-6 py-2.5 bg-white text-black rounded-xl font-semibold text-sm overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-white/25">
@@ -114,7 +113,7 @@ export default function Header() {
                 </Link>
               ))}
               <a
-                href="https://discord.com"
+                href="https://discord.gg/MwNE7Vfb6t"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="mt-4 xs:mt-2 bg-white text-black px-6 py-4 xs:py-3 rounded-xl font-semibold text-center hover:bg-gray-100 transition-all duration-300 text-base xs:text-sm animate-fade-in"

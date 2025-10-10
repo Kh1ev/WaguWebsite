@@ -579,14 +579,14 @@ Link emoji to role
             </p>
             <div className="flex flex-col xs:flex-col sm:flex-row gap-4 xs:gap-3 justify-center">
               <a
-                href="https://discord.com"
+                href="https://discord.gg/MwNE7Vfb6t"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="px-8 xs:px-6 py-4 xs:py-3 bg-white text-black rounded-xl xs:rounded-lg font-semibold text-base xs:text-sm hover:bg-gray-100 transition-all duration-300 hover:scale-105 w-full sm:w-auto">
                 Join Discord Support
               </a>
               <Link
-                href="/tutorial"
+                href="/pages/tutorial"
                 className="px-8 xs:px-6 py-4 xs:py-3 bg-white/5 backdrop-blur-sm border-2 border-white/20 rounded-xl xs:rounded-lg font-semibold text-base xs:text-sm hover:bg-white/10 transition-all duration-300 hover:scale-105 w-full sm:w-auto">
                 View Tutorials
               </Link>

@@ -21,8 +21,8 @@ export default function Footer() {
       links: [
         { name: 'Home', href: '/' },
         { name: 'Features', href: '/#features' },
-        { name: 'Tutorial', href: '/tutorial' },
-        { name: 'Documentation', href: '/document' },
+        { name: 'Tutorial', href: '/pages/tutorial' },
+        { name: 'Documentation', href: '/pages/document' },
       ]
     },
     {
@@ -35,17 +35,13 @@ export default function Footer() {
     {
       title: 'Support',
       links: [
-        { name: 'Help Center', href: '/help' },
-        { name: 'Community', href: 'https://discord.com' },
-        { name: 'Status', href: '/status' },
-        { name: 'Contact Us', href: '/contact' },
+        { name: 'Community', href: 'https://discord.gg/MwNE7Vfb6t ' },
       ]
     }
   ]
 
   const socialLinks = [
-    { icon: <SiDiscord className="text-xl xs:text-lg" />, href: 'https://discord.com', label: 'Discord' },
-    { icon: <SiGithub className="text-xl xs:text-lg" />, href: 'https://github.com', label: 'GitHub' },
+    { icon: <SiDiscord className="text-xl xs:text-lg" />, href: 'https://discord.gg/MwNE7Vfb6t ', label: 'Discord' },
   ]
 
   return (

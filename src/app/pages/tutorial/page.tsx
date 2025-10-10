@@ -108,7 +108,6 @@ export default function Tutorial() {
 
   return (
     <div className="min-h-screen bg-black text-white pt-20">
-      {/* Hero Section */}
       <section className="relative py-24 xs:py-16 sm:py-20 overflow-hidden">
         <div className="absolute inset-0">
           <div className="absolute top-20 right-10 w-96 h-96 bg-white/5 rounded-full blur-3xl animate-pulse-slow" />
@@ -134,8 +133,6 @@ export default function Tutorial() {
           </div>
         </div>
       </section>
-
-      {/* Steps Section */}
       <section className="py-24 xs:py-16 sm:py-20 bg-gradient-to-b from-black to-zinc-950">
         <div className="container mx-auto px-6 xs:px-4">
           <div className="text-center mb-20 xs:mb-12 animate-fade-in">
@@ -155,10 +152,8 @@ export default function Tutorial() {
               <div
                 key={index}
                 className="group bg-white/5 backdrop-blur-sm border border-white/10 rounded-3xl xs:rounded-2xl overflow-hidden hover:bg-white/10 hover:border-white/20 transition-all duration-500 animate-fade-in"
-                style={{ animationDelay: `${index * 100}ms` }}
-              >
+                style={{ animationDelay: `${index * 100}ms` }}>
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 xs:gap-6 p-10 xs:p-6">
-                  {/* Left - Number & Icon */}
                   <div className="lg:col-span-1 flex flex-col items-start space-y-6 xs:space-y-4">
                     <div className="text-8xl xs:text-6xl font-black text-white/5 group-hover:text-white/10 transition-colors">
                       {step.number}
@@ -171,8 +166,6 @@ export default function Tutorial() {
                       <p className="text-gray-400 text-base xs:text-sm">{step.description}</p>
                     </div>
                   </div>
-
-                  {/* Right - Details */}
                   <div className="lg:col-span-2">
                     <div className="bg-black/40 backdrop-blur-sm border border-white/5 rounded-2xl xs:rounded-xl p-8 xs:p-5 hover:border-white/10 transition-all">
                       <h4 className="text-xl xs:text-lg font-bold mb-6 xs:mb-4 flex items-center gap-2">
@@ -195,8 +188,6 @@ export default function Tutorial() {
           </div>
         </div>
       </section>
-
-      {/* Video Tutorials */}
       <section className="py-24 xs:py-16 sm:py-20 bg-black">
         <div className="container mx-auto px-6 xs:px-4">
           <div className="text-center mb-16 xs:mb-10 animate-fade-in">
@@ -216,14 +207,12 @@ export default function Tutorial() {
               <div
                 key={index}
                 className="group bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl xs:rounded-xl overflow-hidden hover:bg-white/10 hover:border-white/20 transition-all duration-300 hover:scale-105 cursor-pointer animate-fade-in"
-                style={{ animationDelay: `${index * 100}ms` }}
-              >
+                style={{ animationDelay: `${index * 100}ms` }}>
                 <div className="relative aspect-video bg-zinc-900 overflow-hidden">
                   <img 
                     src={video.thumbnail} 
                     alt={video.title}
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                  />
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"/>
                   <div className="absolute inset-0 bg-black/60 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300">
                     <div className="bg-white w-20 h-20 xs:w-16 xs:h-16 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform shadow-2xl">
                       <HiPlay className="text-black text-3xl xs:text-2xl ml-1" />
@@ -241,8 +230,6 @@ export default function Tutorial() {
           </div>
         </div>
       </section>
-
-      {/* Quick Commands */}
       <section className="py-24 xs:py-16 sm:py-20 bg-gradient-to-b from-black to-zinc-950">
         <div className="container mx-auto px-6 xs:px-4">
           <div className="text-center mb-16 xs:mb-10 animate-fade-in">
@@ -262,8 +249,7 @@ export default function Tutorial() {
               <div
                 key={index}
                 className="group bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl xs:rounded-xl p-6 xs:p-4 hover:bg-white/10 hover:border-white/20 transition-all duration-300 hover:translate-x-2 animate-fade-in"
-                style={{ animationDelay: `${index * 50}ms` }}
-              >
+                style={{ animationDelay: `${index * 50}ms` }}>
                 <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 xs:gap-3">
                   <code className="text-green-400 font-mono font-bold text-lg xs:text-base bg-black/40 px-4 xs:px-3 py-2 xs:py-1.5 rounded-lg border border-white/5 group-hover:border-white/10 transition-all">
                     {cmd.command}
@@ -275,8 +261,6 @@ export default function Tutorial() {
           </div>
         </div>
       </section>
-
-      {/* CTA Section */}
       <section className="py-24 xs:py-16 sm:py-20 bg-black">
         <div className="container mx-auto px-6 xs:px-4">
           <div className="max-w-4xl mx-auto bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-sm border border-white/10 rounded-3xl xs:rounded-2xl p-16 xs:p-8 sm:p-12 text-center hover:border-white/20 transition-all duration-500">
@@ -288,17 +272,15 @@ export default function Tutorial() {
             </p>
             <div className="flex flex-col xs:flex-col sm:flex-row gap-4 xs:gap-3 justify-center">
               <a
-                href="https://discord.com"
+                href="https://discord.gg/MwNE7Vfb6t"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="px-8 xs:px-6 py-4 xs:py-3 bg-white text-black rounded-xl xs:rounded-lg font-semibold text-base xs:text-sm hover:bg-gray-100 transition-all duration-300 hover:scale-105 w-full sm:w-auto"
-              >
+                className="px-8 xs:px-6 py-4 xs:py-3 bg-white text-black rounded-xl xs:rounded-lg font-semibold text-base xs:text-sm hover:bg-gray-100 transition-all duration-300 hover:scale-105 w-full sm:w-auto">
                 Join Discord Server
               </a>
               <Link
-                href="/document"
-                className="px-8 xs:px-6 py-4 xs:py-3 bg-white/5 backdrop-blur-sm border-2 border-white/20 rounded-xl xs:rounded-lg font-semibold text-base xs:text-sm hover:bg-white/10 transition-all duration-300 hover:scale-105 w-full sm:w-auto"
-              >
+                href="/pages/document"
+                className="px-8 xs:px-6 py-4 xs:py-3 bg-white/5 backdrop-blur-sm border-2 border-white/20 rounded-xl xs:rounded-lg font-semibold text-base xs:text-sm hover:bg-white/10 transition-all duration-300 hover:scale-105 w-full sm:w-auto">
                 Read Documentation
               </Link>
             </div>
