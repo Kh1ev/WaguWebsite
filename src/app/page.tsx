@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
-import { HiSparkles, HiShieldCheck, HiLightningBolt, HiCog, HiUsers, HiChartBar, HiPlay } from 'react-icons/hi'
+import { HiSparkles, HiShieldCheck, HiLightningBolt, HiCog, HiUsers, HiChartBar } from 'react-icons/hi'
 import { SiDiscord } from 'react-icons/si'
 
 interface Feature {
@@ -14,6 +14,12 @@ interface Feature {
 interface Stat {
   value: string
   label: string
+}
+
+interface Partner {
+  name: string
+  logo: string
+  url: string
 }
 
 export default function Home() {
@@ -76,6 +82,13 @@ export default function Home() {
     { value: '1M+', label: 'Happy Users' },
     { value: '15+', label: 'Commands' },
     { value: '99.9%', label: 'Uptime' },
+  ]
+
+  const partners: Partner[] = [
+    { name: 'Discord', logo: 'https://cdn.cdnlogo.com/logos/d/43/discord.svg', url: 'https://discord.com' },
+    { name: 'GitHub', logo: 'https://cdn.cdnlogo.com/logos/g/69/github-icon.svg', url: 'https://github.com' },
+    { name: 'Node.js', logo: 'https://cdn.cdnlogo.com/logos/n/94/nodejs-icon.svg', url: 'https://nodejs.org' },
+    { name: 'Tailwind', logo: 'https://cdn.cdnlogo.com/logos/t/58/tailwindcss.svg', url: 'https://tailwindcss.com' },
   ]
 
   return (
@@ -147,6 +160,77 @@ export default function Home() {
         <div className="absolute bottom-10 xs:bottom-6 left-1/2 -translate-x-1/2 animate-bounce hidden sm:block">
           <div className="w-6 h-10 xs:w-5 xs:h-9 border-2 border-white/30 rounded-full flex justify-center p-2">
             <div className="w-1.5 h-3 bg-white/50 rounded-full animate-scroll" />
+          </div>
+        </div>
+      </section>
+
+      {/* Partners Section */}
+      <section className="relative py-20 xs:py-12 sm:py-16 bg-black border-y border-white/10">
+        <div className="container mx-auto px-6 xs:px-4">
+          <div className="text-center mb-12 xs:mb-8">
+            <h3 className="text-2xl xs:text-xl font-bold text-white/60 mb-2">Trusted Partners</h3>
+            <p className="text-sm xs:text-xs text-gray-500">Powered by industry-leading technologies</p>
+          </div>
+          
+          <div className="relative overflow-hidden">
+            <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-black to-transparent z-10 pointer-events-none" />
+            <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-black to-transparent z-10 pointer-events-none" />
+            
+            <div className="flex animate-scroll-partners">
+              {/* First set of logos */}
+              <div className="flex items-center gap-12 xs:gap-8 min-w-max px-6">
+                {partners.map((partner, index) => (
+                  <a
+                    key={`partner-${index}`}
+                    href={partner.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex-shrink-0 w-44 xs:w-32 h-24 xs:h-20 bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl xs:rounded-lg flex items-center justify-center hover:bg-white/10 hover:border-white/20 transition-colors duration-300 group p-6 xs:p-4">
+                    <img 
+                      src={partner.logo} 
+                      alt={partner.name}
+                      className="w-full h-full object-contain filter brightness-0 invert opacity-60 group-hover:opacity-100 transition-opacity duration-300"
+                    />
+                  </a>
+                ))}
+              </div>
+              
+              {/* Duplicate set for seamless loop */}
+              <div className="flex items-center gap-12 xs:gap-8 min-w-max px-6">
+                {partners.map((partner, index) => (
+                  <a
+                    key={`partner-duplicate-${index}`}
+                    href={partner.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex-shrink-0 w-44 xs:w-32 h-24 xs:h-20 bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl xs:rounded-lg flex items-center justify-center hover:bg-white/10 hover:border-white/20 transition-colors duration-300 group p-6 xs:p-4">
+                    <img 
+                      src={partner.logo} 
+                      alt={partner.name}
+                      className="w-full h-full object-contain filter brightness-0 invert opacity-60 group-hover:opacity-100 transition-opacity duration-300"
+                    />
+                  </a>
+                ))}
+              </div>
+              
+              {/* Third set for seamless loop */}
+              <div className="flex items-center gap-12 xs:gap-8 min-w-max px-6">
+                {partners.map((partner, index) => (
+                  <a
+                    key={`partner-triple-${index}`}
+                    href={partner.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex-shrink-0 w-44 xs:w-32 h-24 xs:h-20 bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl xs:rounded-lg flex items-center justify-center hover:bg-white/10 hover:border-white/20 transition-colors duration-300 group p-6 xs:p-4">
+                    <img 
+                      src={partner.logo} 
+                      alt={partner.name}
+                      className="w-full h-full object-contain filter brightness-0 invert opacity-60 group-hover:opacity-100 transition-opacity duration-300"
+                    />
+                  </a>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -340,6 +424,11 @@ export default function Home() {
           50% { opacity: 0.6; transform: scale(1.1); }
         }
         
+        @keyframes scroll-partners {
+          0% { transform: translateX(0); }
+          100% { transform: translateX(calc(-100% / 3)); }
+        }
+        
         .animate-float {
           animation: float 8s ease-in-out infinite;
         }
@@ -370,6 +459,10 @@ export default function Home() {
         
         .animate-pulse-slow {
           animation: pulse-slow 4s ease-in-out infinite;
+        }
+        
+        .animate-scroll-partners {
+          animation: scroll-partners 30s linear infinite;
         }
       `}</style>
     </div>
