@@ -2,8 +2,6 @@
 
 A modern, feature-rich website for WaguRoom Discord Bot built with Next.js 14, TypeScript, and Tailwind CSS.
 
-![WaguRoom Banner](./public/banner.png)
-
 ## ✨ Features
 
 - 🎨 **Modern Dark Theme** - Sleek black and white minimalist design
