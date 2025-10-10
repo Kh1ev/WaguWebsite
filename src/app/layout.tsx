@@ -22,14 +22,6 @@ export const metadata: Metadata = {
     siteName: 'WaguRoom',
     title: 'WaguRoom - Powerful Discord Bot',
     description: 'The most powerful and feature Discord bot',
-    images: [
-      {
-        url: '/og-image.png',
-        width: 1200,
-        height: 630,
-        alt: 'WaguRoom Discord Bot',
-      },
-    ],
   },
   viewport: {
     width: 'device-width',
