@@ -238,11 +238,6 @@ This includes direct, indirect, incidental, consequential, special, or punitive 
               </p>
               <div className="flex flex-col xs:flex-col sm:flex-row gap-4 xs:gap-3 justify-center">
                 <a
-                  href="mailto:legal@waguroom.com"
-                  className="px-8 xs:px-6 py-4 xs:py-3 bg-white text-black rounded-xl xs:rounded-lg font-semibold text-base xs:text-sm hover:bg-gray-100 transition-all duration-300 hover:scale-105 w-full sm:w-auto">
-                  Email Legal Team
-                </a>
-                <a
                   href="https://discord.gg/MwNE7Vfb6t"
                   target="_blank"
                   rel="noopener noreferrer"

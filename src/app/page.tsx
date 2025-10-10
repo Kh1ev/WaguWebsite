@@ -125,7 +125,7 @@ export default function Home() {
             </p>
             <div className="flex flex-col xs:flex-col sm:flex-row gap-4 xs:gap-3 justify-center items-center pt-6">
               <a
-                href="https://discord.gg/MwNE7Vfb6t"
+                href="https://discord.com/oauth2/authorize?client_id=1396849762862501968"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="group relative px-8 xs:px-6 py-4 xs:py-3 bg-white text-black rounded-xl xs:rounded-lg font-semibold text-base xs:text-sm overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-white/20 w-full sm:w-auto">
