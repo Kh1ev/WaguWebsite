@@ -291,9 +291,9 @@ export default function Home() {
                 
                 <div className="relative space-y-6 xs:space-y-4">
                   {[
-                    { label: 'Command Prefix', value: '$ wagu help', color: 'text-green-400' },
-                    { label: 'Available Commands', value: '150+ commands', color: 'text-blue-400' },
-                    { label: 'Average Response', value: '< 50ms', color: 'text-purple-400' },
+                    { label: 'Command Prefix', value: '/help | w!help', color: 'text-green-400' },
+                    { label: 'Available Commands', value: '10+ Commands', color: 'text-blue-400' },
+                    { label: 'Average Response', value: '1ms', color: 'text-purple-400' },
                     { label: 'System Uptime', value: '99.9%', color: 'text-pink-400' }
                   ].map((stat, index) => (
                     <div 
