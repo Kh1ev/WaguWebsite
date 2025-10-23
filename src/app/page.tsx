@@ -192,7 +192,7 @@ export default function Home() {
                 Trusted by 100+ Discord Servers
               </span>
             </div>
-            <h1 className="text-7xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black leading-tight tracking-tight">
+            <h1 className="text-5xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black leading-tight tracking-tight">
               <span className="block bg-gradient-to-r from-white via-gray-200 to-white bg-clip-text text-transparent animate-shimmer bg-[length:200%_100%]">
                 WaguRoom
               </span>
