@@ -1,64 +1,70 @@
-'use client'
+"use client";
 
-import Link from 'next/link'
-import { SiDiscord, SiGithub } from 'react-icons/si'
-import { HiMail, HiLocationMarker } from 'react-icons/hi'
+import Link from "next/link";
+import { SiDiscord, SiGithub } from "react-icons/si";
+import { HiMail, HiLocationMarker } from "react-icons/hi";
 
 interface FooterLink {
-  name: string
-  href: string
+  name: string;
+  href: string;
 }
 
 interface FooterSection {
-  title: string
-  links: FooterLink[]
+  title: string;
+  links: FooterLink[];
 }
 
 export default function Footer() {
   const footerSections: FooterSection[] = [
     {
-      title: 'Product',
+      title: "Product",
       links: [
-        { name: 'Home', href: '/' },
-        { name: 'Features', href: '/#features' },
-        { name: 'Tutorial', href: '/pages/tutorial' },
-        { name: 'Documentation', href: '/pages/document' },
-      ]
+        { name: "Home", href: "/" },
+        { name: "Features", href: "/#features" },
+        { name: "Tutorial", href: "/pages/tutorial" },
+        { name: "Documentation", href: "/pages/document" },
+      ],
     },
     {
-      title: 'Legal',
+      title: "Legal",
       links: [
-        { name: 'Privacy Policy', href: '/pages/privacyPolicy' },
-        { name: 'Terms of Service', href: '/pages/ToS' },
-      ]
+        { name: "Privacy Policy", href: "/pages/privacyPolicy" },
+        { name: "Terms of Service", href: "/pages/ToS" },
+      ],
     },
     {
-      title: 'Support',
-      links: [
-        { name: 'Community', href: 'https://discord.gg/MwNE7Vfb6t ' },
-      ]
-    }
-  ]
+      title: "Support",
+      links: [{ name: "Community", href: "https://discord.gg/MwNE7Vfb6t " }],
+    },
+  ];
 
   const socialLinks = [
-    { icon: <SiDiscord className="text-xl xs:text-lg" />, href: 'https://discord.gg/MwNE7Vfb6t ', label: 'Discord' },
-  ]
+    {
+      icon: <SiDiscord className="text-xl xs:text-lg" />,
+      href: "https://discord.gg/MwNE7Vfb6t ",
+      label: "Discord",
+    },
+  ];
 
   return (
     <footer className="relative bg-gradient-to-b from-zinc-950 to-black border-t border-white/10">
       <div className="container mx-auto px-6 xs:px-4 py-16 xs:py-12">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-12 xs:gap-8">
           <div className="lg:col-span-2 space-y-6 xs:space-y-4">
-            <Link href="/" className="flex items-center gap-3 xs:gap-2 group w-fit">
+            <Link
+              href="/"
+              className="flex items-center gap-3 xs:gap-2 group w-fit"
+            >
               <div className="bg-gradient-to-br from-white to-gray-400 p-2.5 xs:p-2 rounded-xl xs:rounded-lg transform group-hover:scale-110 group-hover:rotate-6 transition-all duration-300">
                 <SiDiscord className="text-black text-2xl xs:text-xl" />
               </div>
               <span className="text-2xl xs:text-xl font-black">WaguRoom</span>
             </Link>
-            
+
             <p className="text-gray-400 text-sm xs:text-xs leading-relaxed max-w-sm">
-              The most powerful and feature-rich Discord bot built for modern communities. 
-              Automate moderation, engage members, and unlock unlimited possibilities.
+              The most powerful and feature-rich Discord bot built for modern
+              communities. Automate moderation, engage members, and unlock
+              unlimited possibilities.
             </p>
 
             <div className="flex items-center gap-4 xs:gap-3">
@@ -69,7 +75,8 @@ export default function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={social.label}
-                  className="p-3 xs:p-2.5 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 rounded-xl xs:rounded-lg transition-all duration-300 hover:scale-110 group">
+                  className="p-3 xs:p-2.5 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 rounded-xl xs:rounded-lg transition-all duration-300 hover:scale-110 group"
+                >
                   <span className="text-gray-400 group-hover:text-white transition-colors">
                     {social.icon}
                   </span>
@@ -80,7 +87,10 @@ export default function Footer() {
             <div className="space-y-2 xs:space-y-1.5 pt-4 xs:pt-2">
               <div className="flex items-center gap-2 text-gray-400 text-sm xs:text-xs">
                 <HiMail className="text-base xs:text-sm flex-shrink-0" />
-                <a href="mailto:support@waguroom.com" className="hover:text-white transition-colors">
+                <a
+                  href="mailto:support@waguroom.com"
+                  className="hover:text-white transition-colors"
+                >
                   support@waguroom.com
                 </a>
               </div>
@@ -93,13 +103,16 @@ export default function Footer() {
 
           {footerSections.map((section, index) => (
             <div key={index} className="space-y-4 xs:space-y-3">
-              <h3 className="text-white font-bold text-base xs:text-sm">{section.title}</h3>
+              <h3 className="text-white font-bold text-base xs:text-sm">
+                {section.title}
+              </h3>
               <ul className="space-y-3 xs:space-y-2">
                 {section.links.map((link, linkIndex) => (
                   <li key={linkIndex}>
                     <Link
                       href={link.href}
-                      className="text-gray-400 hover:text-white transition-all duration-300 text-sm xs:text-xs inline-block hover:translate-x-1">
+                      className="text-gray-400 hover:text-white transition-all duration-300 text-sm xs:text-xs inline-block hover:translate-x-1"
+                    >
                       {link.name}
                     </Link>
                   </li>
@@ -110,22 +123,35 @@ export default function Footer() {
         </div>
       </div>
 
+      {/* Large WAGUROOM Text */}
+      <div className="relative py-16 xs:py-12 sm:py-14 md:py-16 overflow-hidden">
+        <div className="container mx-auto px-6 xs:px-4">
+          <h2 className="text-[4rem] xs:text-[5rem] sm:text-[7rem] md:text-[9rem] lg:text-[11rem] xl:text-[13rem] 2xl:text-[15rem] font-black text-center leading-none tracking-tighter break-words">
+            <span className="bg-white bg-clip-text text-transparent">
+              WAGUROOM
+            </span>
+          </h2>
+        </div>
+      </div>
+
       <div className="border-t border-white/10">
         <div className="container mx-auto px-6 xs:px-4 py-6 xs:py-4">
           <div className="flex flex-col sm:flex-row justify-between items-center gap-4 xs:gap-3">
             <p className="text-gray-400 text-sm xs:text-xs text-center sm:text-left">
               © {new Date().getFullYear()} WaguRoom. All rights reserved.
             </p>
-            
+
             <div className="flex items-center gap-6 xs:gap-4">
               <Link
                 href="/pages/privacyPolicy"
-                className="text-gray-400 hover:text-white transition-colors text-sm xs:text-xs">
+                className="text-gray-400 hover:text-white transition-colors text-sm xs:text-xs"
+              >
                 Privacy
               </Link>
               <Link
                 href="/pages/ToS"
-                className="text-gray-400 hover:text-white transition-colors text-sm xs:text-xs">
+                className="text-gray-400 hover:text-white transition-colors text-sm xs:text-xs"
+              >
                 Terms
               </Link>
             </div>
@@ -138,5 +164,5 @@ export default function Footer() {
         <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-white/3 rounded-full blur-3xl" />
       </div>
     </footer>
-  )
+  );
 }
