@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import {
   HiSparkles,
   HiShieldCheck,
@@ -33,6 +33,44 @@ export default function Home() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [scrollY, setScrollY] = useState(0);
   const [hoveredCard, setHoveredCard] = useState<number | null>(null);
+  const [isDragging, setIsDragging] = useState(false);
+  const [hasDragged, setHasDragged] = useState(false);
+  const partnersRef = useRef<HTMLDivElement>(null);
+  const partnersContainerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const container = partnersContainerRef.current;
+    if (!container) return;
+
+    const handleScroll = () => {
+      const { scrollLeft, scrollWidth, clientWidth } = container;
+      const sectionWidth = scrollWidth / 3;
+      const maxScroll = scrollWidth - clientWidth;
+
+      // If scrolled near the end (right), jump back to the middle section
+      if (scrollLeft >= maxScroll - 100) {
+        container.scrollLeft = sectionWidth + (scrollLeft - maxScroll);
+      }
+      // If scrolled near the beginning (left), jump to the middle section
+      else if (scrollLeft <= 100) {
+        container.scrollLeft = sectionWidth + scrollLeft;
+      }
+    };
+
+    // Initialize scroll position to middle section after a brief delay
+    const timer = setTimeout(() => {
+      if (container) {
+        container.scrollLeft = container.scrollWidth / 3;
+      }
+    }, 200);
+
+    container.addEventListener("scroll", handleScroll, { passive: true });
+
+    return () => {
+      clearTimeout(timer);
+      container.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
 
   // useEffect(() => {
   //   const handleMouseMove = (e: MouseEvent) => {
@@ -99,24 +137,34 @@ export default function Home() {
 
   const partners: Partner[] = [
     {
-      name: "Discord",
-      logo: "https://cdn.cdnlogo.com/logos/d/43/discord.svg",
-      url: "https://discord.com",
+      name: "Alya",
+      logo: "/assets/images/alya.webp",
+      url: "#",
     },
     {
-      name: "GitHub",
-      logo: "https://cdn.cdnlogo.com/logos/g/69/github-icon.svg",
-      url: "https://github.com",
+      name: "Jago",
+      logo: "/assets/images/jago.webp",
+      url: "#",
     },
     {
-      name: "Node.js",
-      logo: "https://cdn.cdnlogo.com/logos/n/94/nodejs-icon.svg",
-      url: "https://nodejs.org",
+      name: "Kh1ev",
+      logo: "/assets/images/kh1ev.png",
+      url: "#",
     },
     {
-      name: "Tailwind",
-      logo: "https://cdn.cdnlogo.com/logos/t/58/tailwindcss.svg",
-      url: "https://tailwindcss.com",
+      name: "Soundy",
+      logo: "/assets/images/soundy.webp",
+      url: "#",
+    },
+    {
+      name: "Xhibi",
+      logo: "/assets/images/xhibi.png",
+      url: "#",
+    },
+    {
+      name: "Yuki",
+      logo: "/assets/images/yuki.webp",
+      url: "#",
     },
   ];
 
@@ -213,64 +261,170 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="relative overflow-hidden">
-            <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-black to-transparent z-10 pointer-events-none" />
-            <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-black to-transparent z-10 pointer-events-none" />
+          <div
+            ref={partnersContainerRef}
+            className="relative overflow-x-scroll overflow-y-hidden scrollbar-hide"
+            style={{
+              cursor: isDragging ? "grabbing" : "grab",
+              scrollbarWidth: "none",
+              msOverflowStyle: "none",
+              WebkitOverflowScrolling: "touch",
+            }}
+            onMouseDown={(e) => {
+              e.preventDefault();
+              setIsDragging(true);
+              setHasDragged(false);
+              const container = partnersContainerRef.current;
+              if (!container) return;
 
-            <div className="flex animate-scroll-partners">
+              const startX = e.pageX;
+              const scrollLeft = container.scrollLeft;
+
+              const handleMouseMove = (e: MouseEvent) => {
+                const x = e.pageX;
+                const walk = (x - startX) * 2;
+                if (Math.abs(walk) > 5) {
+                  setHasDragged(true);
+                }
+                container.scrollLeft = scrollLeft - walk;
+              };
+
+              const handleMouseUp = () => {
+                setTimeout(() => {
+                  setIsDragging(false);
+                  setHasDragged(false);
+                }, 100);
+                document.removeEventListener("mousemove", handleMouseMove);
+                document.removeEventListener("mouseup", handleMouseUp);
+              };
+
+              document.addEventListener("mousemove", handleMouseMove);
+              document.addEventListener("mouseup", handleMouseUp);
+            }}
+            onTouchStart={(e) => {
+              setIsDragging(true);
+              setHasDragged(false);
+              const container = partnersContainerRef.current;
+              if (!container) return;
+
+              const startX = e.touches[0].pageX;
+              const scrollLeft = container.scrollLeft;
+
+              const handleTouchMove = (e: TouchEvent) => {
+                const x = e.touches[0].pageX;
+                const walk = (x - startX) * 2;
+                if (Math.abs(walk) > 5) {
+                  setHasDragged(true);
+                }
+                container.scrollLeft = scrollLeft - walk;
+              };
+
+              const handleTouchEnd = () => {
+                setTimeout(() => {
+                  setIsDragging(false);
+                  setHasDragged(false);
+                }, 100);
+                document.removeEventListener("touchmove", handleTouchMove);
+                document.removeEventListener("touchend", handleTouchEnd);
+              };
+
+              document.addEventListener("touchmove", handleTouchMove);
+              document.addEventListener("touchend", handleTouchEnd);
+            }}
+          >
+            <div
+              ref={partnersRef}
+              className="flex animate-scroll-partners"
+              style={{
+                userSelect: "none",
+                animationPlayState: isDragging ? "paused" : "running",
+              }}
+              onClick={(e) => {
+                if (hasDragged) {
+                  e.preventDefault();
+                }
+              }}
+            >
               {/* First set of logos */}
-              <div className="flex items-center gap-12 xs:gap-8 min-w-max px-6">
+              <div className="flex items-center gap-16 xs:gap-8 min-w-max px-6">
                 {partners.map((partner, index) => (
                   <a
                     key={`partner-${index}`}
                     href={partner.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex-shrink-0 w-44 xs:w-32 h-24 xs:h-20 bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl xs:rounded-lg flex items-center justify-center hover:bg-white/10 hover:border-white/20 transition-colors duration-300 group p-6 xs:p-4"
+                    className="flex-shrink-0 group"
+                    onClick={(e) => {
+                      if (partner.url === "#" || hasDragged) e.preventDefault();
+                    }}
                   >
-                    <img
-                      src={partner.logo}
-                      alt={partner.name}
-                      className="w-full h-full object-contain filter brightness-0 invert opacity-60 group-hover:opacity-100 transition-opacity duration-300"
-                    />
+                    <div className="w-32 h-32 xs:w-24 xs:h-24 sm:w-28 sm:h-28 bg-white/5 backdrop-blur-sm border-2 border-white/10 rounded-full flex items-center justify-center hover:bg-white/10 hover:border-white/20 p-2 overflow-hidden">
+                      <img
+                        src={partner.logo}
+                        alt={partner.name}
+                        className="w-full h-full object-cover rounded-full"
+                        draggable="false"
+                      />
+                    </div>
+                    <p className="text-center mt-3 text-sm text-white/60 group-hover:text-white/90 transition-colors">
+                      {partner.name}
+                    </p>
                   </a>
                 ))}
               </div>
 
               {/* Duplicate set for seamless loop */}
-              <div className="flex items-center gap-12 xs:gap-8 min-w-max px-6">
+              <div className="flex items-center gap-16 xs:gap-8 min-w-max px-6">
                 {partners.map((partner, index) => (
                   <a
                     key={`partner-duplicate-${index}`}
                     href={partner.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex-shrink-0 w-44 xs:w-32 h-24 xs:h-20 bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl xs:rounded-lg flex items-center justify-center hover:bg-white/10 hover:border-white/20 transition-colors duration-300 group p-6 xs:p-4"
+                    className="flex-shrink-0 group"
+                    onClick={(e) => {
+                      if (partner.url === "#" || hasDragged) e.preventDefault();
+                    }}
                   >
-                    <img
-                      src={partner.logo}
-                      alt={partner.name}
-                      className="w-full h-full object-contain filter brightness-0 invert opacity-60 group-hover:opacity-100 transition-opacity duration-300"
-                    />
+                    <div className="w-32 h-32 xs:w-24 xs:h-24 sm:w-28 sm:h-28 bg-white/5 backdrop-blur-sm border-2 border-white/10 rounded-full flex items-center justify-center hover:bg-white/10 hover:border-white/20 p-2 overflow-hidden">
+                      <img
+                        src={partner.logo}
+                        alt={partner.name}
+                        className="w-full h-full object-cover rounded-full"
+                        draggable="false"
+                      />
+                    </div>
+                    <p className="text-center mt-3 text-sm text-white/60 group-hover:text-white/90 transition-colors">
+                      {partner.name}
+                    </p>
                   </a>
                 ))}
               </div>
 
               {/* Third set for seamless loop */}
-              <div className="flex items-center gap-12 xs:gap-8 min-w-max px-6">
+              <div className="flex items-center gap-16 xs:gap-8 min-w-max px-6">
                 {partners.map((partner, index) => (
                   <a
                     key={`partner-triple-${index}`}
                     href={partner.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex-shrink-0 w-44 xs:w-32 h-24 xs:h-20 bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl xs:rounded-lg flex items-center justify-center hover:bg-white/10 hover:border-white/20 transition-colors duration-300 group p-6 xs:p-4"
+                    className="flex-shrink-0 group"
+                    onClick={(e) => {
+                      if (partner.url === "#" || hasDragged) e.preventDefault();
+                    }}
                   >
-                    <img
-                      src={partner.logo}
-                      alt={partner.name}
-                      className="w-full h-full object-contain filter brightness-0 invert opacity-60 group-hover:opacity-100 transition-opacity duration-300"
-                    />
+                    <div className="w-32 h-32 xs:w-24 xs:h-24 sm:w-28 sm:h-28 bg-white/5 backdrop-blur-sm border-2 border-white/10 rounded-full flex items-center justify-center hover:bg-white/10 hover:border-white/20 p-2 overflow-hidden">
+                      <img
+                        src={partner.logo}
+                        alt={partner.name}
+                        className="w-full h-full object-cover rounded-full"
+                        draggable="false"
+                      />
+                    </div>
+                    <p className="text-center mt-3 text-sm text-white/60 group-hover:text-white/90 transition-colors">
+                      {partner.name}
+                    </p>
                   </a>
                 ))}
               </div>
