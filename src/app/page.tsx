@@ -349,8 +349,8 @@ export default function Home() {
                       color: "text-green-400",
                     },
                     {
-                      label: "Available Commands",
-                      value: "150+ commands",
+                      label: "Party Room Active",
+                      value: "13 Rooms",
                       color: "text-blue-400",
                     },
                     {
