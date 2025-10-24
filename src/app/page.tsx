@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useState, useLayoutEffect, useRef } from "react";
+import { useState, useRef } from "react";
 import {
   HiSparkles,
   HiShieldCheck,
@@ -33,66 +33,11 @@ export default function Home() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [scrollY, setScrollY] = useState(0);
   const [hoveredCard, setHoveredCard] = useState<number | null>(null);
+  const [isDragging, setIsDragging] = useState(false);
+  const [startX, setStartX] = useState(0);
+  const [scrollLeft, setScrollLeft] = useState(0);
 
   const partnersContainerRef = useRef<HTMLDivElement>(null);
-  const autoScrollRef = useRef<number | null>(null);
-
-  useLayoutEffect(() => {
-    const container = partnersContainerRef.current;
-
-    if (!container) return;
-
-    const getGroupWidth = () => container.scrollWidth / 5;
-
-    const handleScroll = () => {
-      const gw = getGroupWidth();
-      const x = container.scrollLeft;
-      const leftBoundary = gw;
-      const rightBoundary = gw * 3;
-
-      if (x <= leftBoundary) {
-        container.scrollLeft = x + gw;
-      } else if (x >= rightBoundary) {
-        container.scrollLeft = x - gw;
-      }
-    };
-
-    // Initialize scroll position to middle group (robust retry until layout is ready)
-    let frame = 0;
-    let attempts = 0;
-    const initScroll = () => {
-      const gw = getGroupWidth();
-      if (gw > 0) {
-        container.scrollLeft = gw * 2; // Start at middle group (group 3 of 5)
-        return;
-      }
-      if (attempts++ < 60) {
-        frame = requestAnimationFrame(initScroll);
-      }
-    };
-    frame = requestAnimationFrame(initScroll);
-
-    // Auto-scroll animation
-    const autoScroll = () => {
-      if (container) {
-        container.scrollLeft += 0.5; // Speed of auto-scroll (adjust as needed)
-      }
-      autoScrollRef.current = requestAnimationFrame(autoScroll);
-    };
-
-    // Start auto-scroll after initialization
-    setTimeout(() => {
-      autoScrollRef.current = requestAnimationFrame(autoScroll);
-    }, 300);
-
-    container.addEventListener("scroll", handleScroll, { passive: true });
-
-    return () => {
-      if (frame) cancelAnimationFrame(frame);
-      if (autoScrollRef.current) cancelAnimationFrame(autoScrollRef.current);
-      container.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
 
   // useEffect(() => {
   //   const handleMouseMove = (e: MouseEvent) => {
@@ -285,29 +230,63 @@ export default function Home() {
 
           <div
             ref={partnersContainerRef}
-            className="relative overflow-x-hidden overflow-y-visible scrollbar-hide"
+            className="relative overflow-x-auto overflow-y-hidden scrollbar-hide"
             style={{
-              cursor: "default",
+              cursor: isDragging ? "grabbing" : "grab",
               scrollbarWidth: "none",
               msOverflowStyle: "none",
             }}
+            onMouseDown={(e) => {
+              setIsDragging(true);
+              setStartX(
+                e.pageX - (partnersContainerRef.current?.offsetLeft || 0),
+              );
+              setScrollLeft(partnersContainerRef.current?.scrollLeft || 0);
+            }}
+            onMouseLeave={() => setIsDragging(false)}
+            onMouseUp={() => setIsDragging(false)}
+            onMouseMove={(e) => {
+              if (!isDragging) return;
+              e.preventDefault();
+              const x =
+                e.pageX - (partnersContainerRef.current?.offsetLeft || 0);
+              const walk = (x - startX) * 2;
+              if (partnersContainerRef.current) {
+                partnersContainerRef.current.scrollLeft = scrollLeft - walk;
+              }
+            }}
+            onTouchStart={(e) => {
+              setIsDragging(true);
+              setStartX(e.touches[0].pageX);
+              setScrollLeft(partnersContainerRef.current?.scrollLeft || 0);
+            }}
+            onTouchEnd={() => setIsDragging(false)}
+            onTouchMove={(e) => {
+              if (!isDragging) return;
+              const x = e.touches[0].pageX;
+              const walk = (startX - x) * 2;
+              if (partnersContainerRef.current) {
+                partnersContainerRef.current.scrollLeft = scrollLeft + walk;
+              }
+            }}
           >
             <div
-              className="flex"
               style={{
+                display: "flex",
                 userSelect: "none",
                 whiteSpace: "nowrap",
-                pointerEvents: "auto",
               }}
             >
-              <div className="flex items-center gap-16 xs:gap-8 min-w-max px-8">
+              {/* Group 1 */}
+              <div className="flex items-center gap-16 xs:gap-16 min-w-max px-8">
                 {partners.map((partner, index) => (
                   <a
-                    key={`partner-${index}`}
+                    key={`partner-1-${index}`}
                     href={partner.url}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex-shrink-0 group"
+                    style={{ pointerEvents: "auto" }}
                     onClick={(e) => {
                       if (partner.url === "#") e.preventDefault();
                     }}
@@ -327,15 +306,16 @@ export default function Home() {
                 ))}
               </div>
 
-              {/* Duplicate set for seamless loop */}
-              <div className="flex items-center gap-16 xs:gap-8 min-w-max px-8">
+              {/* Group 2 */}
+              <div className="flex items-center gap-16 xs:gap-16 min-w-max px-8">
                 {partners.map((partner, index) => (
                   <a
-                    key={`partner-duplicate-${index}`}
+                    key={`partner-2-${index}`}
                     href={partner.url}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex-shrink-0 group"
+                    style={{ pointerEvents: "auto" }}
                     onClick={(e) => {
                       if (partner.url === "#") e.preventDefault();
                     }}
@@ -355,15 +335,16 @@ export default function Home() {
                 ))}
               </div>
 
-              {/* Third set for seamless loop */}
-              <div className="flex items-center gap-16 xs:gap-8 min-w-max px-8">
+              {/* Group 3 */}
+              <div className="flex items-center gap-16 xs:gap-16 min-w-max px-8">
                 {partners.map((partner, index) => (
                   <a
-                    key={`partner-triple-${index}`}
+                    key={`partner-3-${index}`}
                     href={partner.url}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex-shrink-0 group"
+                    style={{ pointerEvents: "auto" }}
                     onClick={(e) => {
                       if (partner.url === "#") e.preventDefault();
                     }}
@@ -383,18 +364,16 @@ export default function Home() {
                 ))}
               </div>
 
-              {/* Fourth set for seamless loop */}
-              <div
-                className="flex items-center gap-16 xs:gap-8 min-w-max px-8"
-                aria-hidden
-              >
+              {/* Group 4 */}
+              <div className="flex items-center gap-16 xs:gap-16 min-w-max px-8">
                 {partners.map((partner, index) => (
                   <a
-                    key={`partner-fourth-${index}`}
+                    key={`partner-4-${index}`}
                     href={partner.url}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex-shrink-0 group"
+                    style={{ pointerEvents: "auto" }}
                     onClick={(e) => {
                       if (partner.url === "#") e.preventDefault();
                     }}
@@ -414,18 +393,45 @@ export default function Home() {
                 ))}
               </div>
 
-              {/* Fifth set for seamless loop */}
-              <div
-                className="flex items-center gap-16 xs:gap-8 min-w-max px-8"
-                aria-hidden
-              >
+              {/* Group 5 */}
+              <div className="flex items-center gap-16 xs:gap-16 min-w-max px-8">
                 {partners.map((partner, index) => (
                   <a
-                    key={`partner-fifth-${index}`}
+                    key={`partner-5-${index}`}
                     href={partner.url}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex-shrink-0 group"
+                    style={{ pointerEvents: "auto" }}
+                    onClick={(e) => {
+                      if (partner.url === "#") e.preventDefault();
+                    }}
+                  >
+                    <div className="w-32 h-32 xs:w-24 xs:h-24 sm:w-28 sm:h-28 bg-white/5 backdrop-blur-sm border-2 border-white/10 rounded-full flex items-center justify-center hover:bg-white/10 hover:border-white/20 p-2 overflow-hidden">
+                      <img
+                        src={partner.logo}
+                        alt={partner.name}
+                        className="w-full h-full object-cover rounded-full"
+                        draggable="false"
+                      />
+                    </div>
+                    <p className="text-center mt-3 text-sm text-white/60 group-hover:text-white/90 transition-colors">
+                      {partner.name}
+                    </p>
+                  </a>
+                ))}
+              </div>
+
+              {/* Group 6 */}
+              <div className="flex items-center gap-16 xs:gap-16 min-w-max px-8">
+                {partners.map((partner, index) => (
+                  <a
+                    key={`partner-6-${index}`}
+                    href={partner.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex-shrink-0 group"
+                    style={{ pointerEvents: "auto" }}
                     onClick={(e) => {
                       if (partner.url === "#") e.preventDefault();
                     }}
@@ -839,7 +845,7 @@ export default function Home() {
         .scrollbar-hide {
           -ms-overflow-style: none;
           scrollbar-width: none;
-          scroll-behavior: auto;
+          scroll-behavior: smooth;
         }
       `}</style>
     </div>
