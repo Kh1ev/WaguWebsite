@@ -124,7 +124,7 @@ export default function Footer() {
       </div>
 
       {/* Large WAGUROOM Text */}
-      <div className="relative py-16 xs:py-12 sm:py-14 md:py-16 overflow-hidden">
+      <div className="relative py-16 xs:py-12 sm:py-14 md:py-16   overflow-hidden">
         <div className="container mx-auto px-6 xs:px-4">
           <h2 className="text-[3rem] xs:text-[5rem] sm:text-[7rem] md:text-[9rem] lg:text-[11rem] xl:text-[13rem] 2xl:text-[15rem] font-black text-center leading-none tracking-tighter break-words">
             <span className="bg-white bg-clip-text text-transparent">

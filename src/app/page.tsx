@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useState, useEffect, useRef } from "react";
+import { useState, useLayoutEffect, useRef } from "react";
 import {
   HiSparkles,
   HiShieldCheck,
@@ -35,39 +35,49 @@ export default function Home() {
   const [hoveredCard, setHoveredCard] = useState<number | null>(null);
   const [isDragging, setIsDragging] = useState(false);
   const [hasDragged, setHasDragged] = useState(false);
-  const partnersRef = useRef<HTMLDivElement>(null);
+
   const partnersContainerRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const container = partnersContainerRef.current;
+
     if (!container) return;
 
-    const handleScroll = () => {
-      const { scrollLeft, scrollWidth, clientWidth } = container;
-      const sectionWidth = scrollWidth / 3;
-      const maxScroll = scrollWidth - clientWidth;
+    const getGroupWidth = () => container.scrollWidth / 5;
 
-      // If scrolled near the end (right), jump back to the middle section
-      if (scrollLeft >= maxScroll - 100) {
-        container.scrollLeft = sectionWidth + (scrollLeft - maxScroll);
-      }
-      // If scrolled near the beginning (left), jump to the middle section
-      else if (scrollLeft <= 100) {
-        container.scrollLeft = sectionWidth + scrollLeft;
+    const handleScroll = () => {
+      const gw = getGroupWidth();
+      const x = container.scrollLeft;
+      const leftBoundary = gw;
+      const rightBoundary = gw * 3;
+
+      if (x <= leftBoundary) {
+        container.scrollLeft = x + gw;
+      } else if (x >= rightBoundary) {
+        container.scrollLeft = x - gw;
       }
     };
 
-    // Initialize scroll position to middle section after a brief delay
-    const timer = setTimeout(() => {
-      if (container) {
-        container.scrollLeft = container.scrollWidth / 3;
+    // Initialize scroll position to middle group (robust retry until layout is ready)
+
+    let frame = 0;
+    let attempts = 0;
+    const initScroll = () => {
+      const gw = getGroupWidth();
+      if (gw > 0) {
+        container.scrollLeft = gw * 2; // Start at middle group (group 3 of 5)
+        return;
       }
-    }, 200);
+      if (attempts++ < 60) {
+        frame = requestAnimationFrame(initScroll);
+      }
+    };
+    frame = requestAnimationFrame(initScroll);
 
     container.addEventListener("scroll", handleScroll, { passive: true });
 
     return () => {
-      clearTimeout(timer);
+      if (frame) cancelAnimationFrame(frame);
       container.removeEventListener("scroll", handleScroll);
     };
   }, []);
@@ -253,7 +263,7 @@ export default function Home() {
       <section className="relative py-20 xs:py-12 sm:py-16 bg-black border-y border-white/10">
         <div className="container mx-auto px-6 xs:px-4">
           <div className="text-center mb-12 xs:mb-8">
-            <h3 className="text-2xl xs:text-xl font-bold text-white/60 mb-2">
+            <h3 className="text-2xl xs:text-xl font-bold text-white mb-2">
               Trusted Partners
             </h3>
             <p className="text-sm xs:text-xs text-gray-500">
@@ -333,12 +343,8 @@ export default function Home() {
             }}
           >
             <div
-              ref={partnersRef}
-              className="flex animate-scroll-partners"
-              style={{
-                userSelect: "none",
-                animationPlayState: isDragging ? "paused" : "running",
-              }}
+              className="flex"
+              style={{ userSelect: "none", whiteSpace: "nowrap" }}
               onClick={(e) => {
                 if (hasDragged) {
                   e.preventDefault();
@@ -346,6 +352,7 @@ export default function Home() {
               }}
             >
               {/* First set of logos */}
+
               <div className="flex items-center gap-16 xs:gap-8 min-w-max px-6">
                 {partners.map((partner, index) => (
                   <a
@@ -406,6 +413,68 @@ export default function Home() {
                 {partners.map((partner, index) => (
                   <a
                     key={`partner-triple-${index}`}
+                    href={partner.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex-shrink-0 group"
+                    onClick={(e) => {
+                      if (partner.url === "#" || hasDragged) e.preventDefault();
+                    }}
+                  >
+                    <div className="w-32 h-32 xs:w-24 xs:h-24 sm:w-28 sm:h-28 bg-white/5 backdrop-blur-sm border-2 border-white/10 rounded-full flex items-center justify-center hover:bg-white/10 hover:border-white/20 p-2 overflow-hidden">
+                      <img
+                        src={partner.logo}
+                        alt={partner.name}
+                        className="w-full h-full object-cover rounded-full"
+                        draggable="false"
+                      />
+                    </div>
+                    <p className="text-center mt-3 text-sm text-white/60 group-hover:text-white/90 transition-colors">
+                      {partner.name}
+                    </p>
+                  </a>
+                ))}
+              </div>
+
+              {/* Fourth set for seamless loop */}
+              <div
+                className="flex items-center gap-16 xs:gap-8 min-w-max px-6"
+                aria-hidden
+              >
+                {partners.map((partner, index) => (
+                  <a
+                    key={`partner-fourth-${index}`}
+                    href={partner.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex-shrink-0 group"
+                    onClick={(e) => {
+                      if (partner.url === "#" || hasDragged) e.preventDefault();
+                    }}
+                  >
+                    <div className="w-32 h-32 xs:w-24 xs:h-24 sm:w-28 sm:h-28 bg-white/5 backdrop-blur-sm border-2 border-white/10 rounded-full flex items-center justify-center hover:bg-white/10 hover:border-white/20 p-2 overflow-hidden">
+                      <img
+                        src={partner.logo}
+                        alt={partner.name}
+                        className="w-full h-full object-cover rounded-full"
+                        draggable="false"
+                      />
+                    </div>
+                    <p className="text-center mt-3 text-sm text-white/60 group-hover:text-white/90 transition-colors">
+                      {partner.name}
+                    </p>
+                  </a>
+                ))}
+              </div>
+
+              {/* Fifth set for seamless loop */}
+              <div
+                className="flex items-center gap-16 xs:gap-8 min-w-max px-6"
+                aria-hidden
+              >
+                {partners.map((partner, index) => (
+                  <a
+                    key={`partner-fifth-${index}`}
                     href={partner.url}
                     target="_blank"
                     rel="noopener noreferrer"
@@ -784,15 +853,6 @@ export default function Home() {
           }
         }
 
-        @keyframes scroll-partners {
-          0% {
-            transform: translateX(0);
-          }
-          100% {
-            transform: translateX(calc(-100% / 3));
-          }
-        }
-
         .animate-float {
           animation: float 8s ease-in-out infinite;
         }
@@ -825,8 +885,14 @@ export default function Home() {
           animation: pulse-slow 4s ease-in-out infinite;
         }
 
-        .animate-scroll-partners {
-          animation: scroll-partners 30s linear infinite;
+        /* Partners container adjustments */
+        .scrollbar-hide::-webkit-scrollbar {
+          display: none;
+        }
+        .scrollbar-hide {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+          scroll-behavior: auto;
         }
       `}</style>
     </div>
