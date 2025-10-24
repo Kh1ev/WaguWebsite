@@ -47,15 +47,11 @@ body {
     display: none !important;
 }
 
-@keyframes scroll-partners {
+@keyframes scroll {
     0% {
         transform: translateX(0);
     }
     100% {
-        transform: translateX(-33.333%);
+        transform: translateX(-50%);
     }
-}
-
-.animate-scroll-partners {
-    animation: scroll-partners 60s linear infinite;
 }

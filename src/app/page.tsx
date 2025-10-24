@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import {
   HiSparkles,
   HiShieldCheck,
@@ -38,24 +38,40 @@ export default function Home() {
   const [scrollLeft, setScrollLeft] = useState(0);
 
   const partnersContainerRef = useRef<HTMLDivElement>(null);
+  const [isPaused, setIsPaused] = useState(false);
 
-  // useEffect(() => {
-  //   const handleMouseMove = (e: MouseEvent) => {
-  //     setMousePosition({ x: e.clientX, y: e.clientY });
-  //   };
+  // Auto-scroll animation
+  useEffect(() => {
+    const container = partnersContainerRef.current;
+    if (!container) return;
 
-  //   const handleScroll = () => {
-  //     setScrollY(window.scrollY);
-  //   };
+    let animationId: number;
+    let scrollPosition = 0;
+    const scrollSpeed = 1; // pixels per frame
 
-  //   window.addEventListener("mousemove", handleMouseMove);
-  //   window.addEventListener("scroll", handleScroll);
+    const animate = () => {
+      if (!isPaused && container) {
+        scrollPosition += scrollSpeed;
 
-  //   return () => {
-  //     window.removeEventListener("mousemove", handleMouseMove);
-  //     window.removeEventListener("scroll", handleScroll);
-  //   };
-  // }, []);
+        // Reset position when reaching half (for seamless loop)
+        const maxScroll = container.scrollWidth / 2;
+        if (scrollPosition >= maxScroll) {
+          scrollPosition = 0;
+        }
+
+        container.scrollLeft = scrollPosition;
+      }
+      animationId = requestAnimationFrame(animate);
+    };
+
+    animationId = requestAnimationFrame(animate);
+
+    return () => {
+      if (animationId) {
+        cancelAnimationFrame(animationId);
+      }
+    };
+  }, [isPaused]);
 
   const features: Feature[] = [
     {
@@ -232,53 +248,21 @@ export default function Home() {
             ref={partnersContainerRef}
             className="relative overflow-x-auto overflow-y-hidden scrollbar-hide"
             style={{
-              cursor: isDragging ? "grabbing" : "grab",
-              scrollbarWidth: "none",
-              msOverflowStyle: "none",
+              cursor: "grab",
+              scrollBehavior: "auto",
             }}
-            onMouseDown={(e) => {
-              setIsDragging(true);
-              setStartX(
-                e.pageX - (partnersContainerRef.current?.offsetLeft || 0),
-              );
-              setScrollLeft(partnersContainerRef.current?.scrollLeft || 0);
-            }}
-            onMouseLeave={() => setIsDragging(false)}
-            onMouseUp={() => setIsDragging(false)}
-            onMouseMove={(e) => {
-              if (!isDragging) return;
-              e.preventDefault();
-              const x =
-                e.pageX - (partnersContainerRef.current?.offsetLeft || 0);
-              const walk = (x - startX) * 2;
-              if (partnersContainerRef.current) {
-                partnersContainerRef.current.scrollLeft = scrollLeft - walk;
-              }
-            }}
-            onTouchStart={(e) => {
-              setIsDragging(true);
-              setStartX(e.touches[0].pageX);
-              setScrollLeft(partnersContainerRef.current?.scrollLeft || 0);
-            }}
-            onTouchEnd={() => setIsDragging(false)}
-            onTouchMove={(e) => {
-              if (!isDragging) return;
-              const x = e.touches[0].pageX;
-              const walk = (startX - x) * 2;
-              if (partnersContainerRef.current) {
-                partnersContainerRef.current.scrollLeft = scrollLeft + walk;
-              }
-            }}
+            onMouseEnter={() => setIsPaused(true)}
+            onMouseLeave={() => setIsPaused(false)}
           >
             <div
+              className="flex items-center"
               style={{
-                display: "flex",
                 userSelect: "none",
                 whiteSpace: "nowrap",
               }}
             >
-              {/* Group 1 */}
-              <div className="flex items-center gap-16 xs:gap-16 min-w-max px-8">
+              {/* Group 1 - Original */}
+              <div className="flex items-center gap-16 xs:gap-8 min-w-max px-8 xs:px-4">
                 {partners.map((partner, index) => (
                   <a
                     key={`partner-1-${index}`}
@@ -306,8 +290,8 @@ export default function Home() {
                 ))}
               </div>
 
-              {/* Group 2 */}
-              <div className="flex items-center gap-16 xs:gap-16 min-w-max px-8">
+              {/* Group 2 - Duplicate for seamless loop */}
+              <div className="flex items-center gap-16 xs:gap-8 min-w-max px-8 xs:px-4">
                 {partners.map((partner, index) => (
                   <a
                     key={`partner-2-${index}`}
@@ -335,8 +319,8 @@ export default function Home() {
                 ))}
               </div>
 
-              {/* Group 3 */}
-              <div className="flex items-center gap-16 xs:gap-16 min-w-max px-8">
+              {/* Group 3 - Duplicate for seamless loop */}
+              <div className="flex items-center gap-16 xs:gap-8 min-w-max px-8 xs:px-4">
                 {partners.map((partner, index) => (
                   <a
                     key={`partner-3-${index}`}
@@ -364,8 +348,8 @@ export default function Home() {
                 ))}
               </div>
 
-              {/* Group 4 */}
-              <div className="flex items-center gap-16 xs:gap-16 min-w-max px-8">
+              {/* Group 4 - Duplicate for seamless loop */}
+              <div className="flex items-center gap-16 xs:gap-8 min-w-max px-8 xs:px-4">
                 {partners.map((partner, index) => (
                   <a
                     key={`partner-4-${index}`}
