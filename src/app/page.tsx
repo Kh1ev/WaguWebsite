@@ -33,10 +33,9 @@ export default function Home() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [scrollY, setScrollY] = useState(0);
   const [hoveredCard, setHoveredCard] = useState<number | null>(null);
-  const [isDragging, setIsDragging] = useState(false);
-  const [hasDragged, setHasDragged] = useState(false);
 
   const partnersContainerRef = useRef<HTMLDivElement>(null);
+  const autoScrollRef = useRef<number | null>(null);
 
   useLayoutEffect(() => {
     const container = partnersContainerRef.current;
@@ -59,7 +58,6 @@ export default function Home() {
     };
 
     // Initialize scroll position to middle group (robust retry until layout is ready)
-
     let frame = 0;
     let attempts = 0;
     const initScroll = () => {
@@ -74,10 +72,24 @@ export default function Home() {
     };
     frame = requestAnimationFrame(initScroll);
 
+    // Auto-scroll animation
+    const autoScroll = () => {
+      if (container) {
+        container.scrollLeft += 0.5; // Speed of auto-scroll (adjust as needed)
+      }
+      autoScrollRef.current = requestAnimationFrame(autoScroll);
+    };
+
+    // Start auto-scroll after initialization
+    setTimeout(() => {
+      autoScrollRef.current = requestAnimationFrame(autoScroll);
+    }, 300);
+
     container.addEventListener("scroll", handleScroll, { passive: true });
 
     return () => {
       if (frame) cancelAnimationFrame(frame);
+      if (autoScrollRef.current) cancelAnimationFrame(autoScrollRef.current);
       container.removeEventListener("scroll", handleScroll);
     };
   }, []);
@@ -273,87 +285,22 @@ export default function Home() {
 
           <div
             ref={partnersContainerRef}
-            className="relative overflow-x-scroll overflow-y-hidden scrollbar-hide"
+            className="relative overflow-x-hidden overflow-y-visible scrollbar-hide"
             style={{
-              cursor: isDragging ? "grabbing" : "grab",
+              cursor: "default",
               scrollbarWidth: "none",
               msOverflowStyle: "none",
-              WebkitOverflowScrolling: "touch",
-            }}
-            onMouseDown={(e) => {
-              e.preventDefault();
-              setIsDragging(true);
-              setHasDragged(false);
-              const container = partnersContainerRef.current;
-              if (!container) return;
-
-              const startX = e.pageX;
-              const scrollLeft = container.scrollLeft;
-
-              const handleMouseMove = (e: MouseEvent) => {
-                const x = e.pageX;
-                const walk = (x - startX) * 2;
-                if (Math.abs(walk) > 5) {
-                  setHasDragged(true);
-                }
-                container.scrollLeft = scrollLeft - walk;
-              };
-
-              const handleMouseUp = () => {
-                setTimeout(() => {
-                  setIsDragging(false);
-                  setHasDragged(false);
-                }, 100);
-                document.removeEventListener("mousemove", handleMouseMove);
-                document.removeEventListener("mouseup", handleMouseUp);
-              };
-
-              document.addEventListener("mousemove", handleMouseMove);
-              document.addEventListener("mouseup", handleMouseUp);
-            }}
-            onTouchStart={(e) => {
-              setIsDragging(true);
-              setHasDragged(false);
-              const container = partnersContainerRef.current;
-              if (!container) return;
-
-              const startX = e.touches[0].pageX;
-              const scrollLeft = container.scrollLeft;
-
-              const handleTouchMove = (e: TouchEvent) => {
-                const x = e.touches[0].pageX;
-                const walk = (x - startX) * 2;
-                if (Math.abs(walk) > 5) {
-                  setHasDragged(true);
-                }
-                container.scrollLeft = scrollLeft - walk;
-              };
-
-              const handleTouchEnd = () => {
-                setTimeout(() => {
-                  setIsDragging(false);
-                  setHasDragged(false);
-                }, 100);
-                document.removeEventListener("touchmove", handleTouchMove);
-                document.removeEventListener("touchend", handleTouchEnd);
-              };
-
-              document.addEventListener("touchmove", handleTouchMove);
-              document.addEventListener("touchend", handleTouchEnd);
             }}
           >
             <div
               className="flex"
-              style={{ userSelect: "none", whiteSpace: "nowrap" }}
-              onClick={(e) => {
-                if (hasDragged) {
-                  e.preventDefault();
-                }
+              style={{
+                userSelect: "none",
+                whiteSpace: "nowrap",
+                pointerEvents: "auto",
               }}
             >
-              {/* First set of logos */}
-
-              <div className="flex items-center gap-16 xs:gap-8 min-w-max px-6">
+              <div className="flex items-center gap-16 xs:gap-8 min-w-max px-8">
                 {partners.map((partner, index) => (
                   <a
                     key={`partner-${index}`}
@@ -362,7 +309,7 @@ export default function Home() {
                     rel="noopener noreferrer"
                     className="flex-shrink-0 group"
                     onClick={(e) => {
-                      if (partner.url === "#" || hasDragged) e.preventDefault();
+                      if (partner.url === "#") e.preventDefault();
                     }}
                   >
                     <div className="w-32 h-32 xs:w-24 xs:h-24 sm:w-28 sm:h-28 bg-white/5 backdrop-blur-sm border-2 border-white/10 rounded-full flex items-center justify-center hover:bg-white/10 hover:border-white/20 p-2 overflow-hidden">
@@ -381,7 +328,7 @@ export default function Home() {
               </div>
 
               {/* Duplicate set for seamless loop */}
-              <div className="flex items-center gap-16 xs:gap-8 min-w-max px-6">
+              <div className="flex items-center gap-16 xs:gap-8 min-w-max px-8">
                 {partners.map((partner, index) => (
                   <a
                     key={`partner-duplicate-${index}`}
@@ -390,7 +337,7 @@ export default function Home() {
                     rel="noopener noreferrer"
                     className="flex-shrink-0 group"
                     onClick={(e) => {
-                      if (partner.url === "#" || hasDragged) e.preventDefault();
+                      if (partner.url === "#") e.preventDefault();
                     }}
                   >
                     <div className="w-32 h-32 xs:w-24 xs:h-24 sm:w-28 sm:h-28 bg-white/5 backdrop-blur-sm border-2 border-white/10 rounded-full flex items-center justify-center hover:bg-white/10 hover:border-white/20 p-2 overflow-hidden">
@@ -409,7 +356,7 @@ export default function Home() {
               </div>
 
               {/* Third set for seamless loop */}
-              <div className="flex items-center gap-16 xs:gap-8 min-w-max px-6">
+              <div className="flex items-center gap-16 xs:gap-8 min-w-max px-8">
                 {partners.map((partner, index) => (
                   <a
                     key={`partner-triple-${index}`}
@@ -418,7 +365,7 @@ export default function Home() {
                     rel="noopener noreferrer"
                     className="flex-shrink-0 group"
                     onClick={(e) => {
-                      if (partner.url === "#" || hasDragged) e.preventDefault();
+                      if (partner.url === "#") e.preventDefault();
                     }}
                   >
                     <div className="w-32 h-32 xs:w-24 xs:h-24 sm:w-28 sm:h-28 bg-white/5 backdrop-blur-sm border-2 border-white/10 rounded-full flex items-center justify-center hover:bg-white/10 hover:border-white/20 p-2 overflow-hidden">
@@ -438,7 +385,7 @@ export default function Home() {
 
               {/* Fourth set for seamless loop */}
               <div
-                className="flex items-center gap-16 xs:gap-8 min-w-max px-6"
+                className="flex items-center gap-16 xs:gap-8 min-w-max px-8"
                 aria-hidden
               >
                 {partners.map((partner, index) => (
@@ -449,7 +396,7 @@ export default function Home() {
                     rel="noopener noreferrer"
                     className="flex-shrink-0 group"
                     onClick={(e) => {
-                      if (partner.url === "#" || hasDragged) e.preventDefault();
+                      if (partner.url === "#") e.preventDefault();
                     }}
                   >
                     <div className="w-32 h-32 xs:w-24 xs:h-24 sm:w-28 sm:h-28 bg-white/5 backdrop-blur-sm border-2 border-white/10 rounded-full flex items-center justify-center hover:bg-white/10 hover:border-white/20 p-2 overflow-hidden">
@@ -469,7 +416,7 @@ export default function Home() {
 
               {/* Fifth set for seamless loop */}
               <div
-                className="flex items-center gap-16 xs:gap-8 min-w-max px-6"
+                className="flex items-center gap-16 xs:gap-8 min-w-max px-8"
                 aria-hidden
               >
                 {partners.map((partner, index) => (
@@ -480,7 +427,7 @@ export default function Home() {
                     rel="noopener noreferrer"
                     className="flex-shrink-0 group"
                     onClick={(e) => {
-                      if (partner.url === "#" || hasDragged) e.preventDefault();
+                      if (partner.url === "#") e.preventDefault();
                     }}
                   >
                     <div className="w-32 h-32 xs:w-24 xs:h-24 sm:w-28 sm:h-28 bg-white/5 backdrop-blur-sm border-2 border-white/10 rounded-full flex items-center justify-center hover:bg-white/10 hover:border-white/20 p-2 overflow-hidden">

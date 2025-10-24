@@ -45,7 +45,7 @@ export default function Loading({ onLoadingComplete }: LoadingProps) {
 
   if (!isMounted) {
     return (
-      <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black opacity-100">
+      <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black opacity-100 px-4 sm:px-6">
         {/* Grid Background */}
         <div className="absolute inset-0 overflow-hidden opacity-10">
           <div
@@ -55,20 +55,20 @@ export default function Loading({ onLoadingComplete }: LoadingProps) {
               linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
               linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)
             `,
-              backgroundSize: "50px 50px",
+              backgroundSize: "30px 30px",
             }}
           />
         </div>
 
         {/* Main Content */}
-        <div className="relative z-10 flex flex-col items-center gap-16 xs:gap-12">
+        <div className="relative z-10 flex flex-col items-center gap-8 xs:gap-6 sm:gap-10 md:gap-12 lg:gap-16">
           {/* Large Counter Display */}
           <div className="relative">
             {/* Counter Box */}
-            <div className="relative bg-white/5 backdrop-blur-sm border-2 border-white/20 rounded-2xl p-12 xs:p-8">
-              <div className="text-center space-y-2">
+            <div className="relative bg-white/5 backdrop-blur-sm border-2 border-white/20 rounded-xl xs:rounded-xl sm:rounded-2xl p-6 xs:p-8 sm:p-10 md:p-12">
+              <div className="text-center space-y-1 xs:space-y-2">
                 {/* Large Number */}
-                <div className="font-mono text-8xl xs:text-6xl font-black text-white tracking-tighter relative">
+                <div className="font-mono text-5xl xs:text-6xl sm:text-7xl md:text-8xl font-black text-white tracking-tighter relative">
                   <span className="relative z-10">0</span>
                   <span className="absolute inset-0 text-white/20 blur-md">
                     0
@@ -76,7 +76,7 @@ export default function Loading({ onLoadingComplete }: LoadingProps) {
                 </div>
 
                 {/* Percentage Symbol */}
-                <div className="font-mono text-2xl xs:text-xl text-white/60">
+                <div className="font-mono text-lg xs:text-xl sm:text-2xl text-white/60">
                   %
                 </div>
               </div>
@@ -84,20 +84,20 @@ export default function Loading({ onLoadingComplete }: LoadingProps) {
           </div>
 
           {/* Progress Information */}
-          <div className="w-96 xs:w-80 space-y-6">
+          <div className="w-full max-w-[280px] xs:max-w-[320px] sm:max-w-sm md:max-w-md lg:max-w-96 space-y-4 xs:space-y-5 sm:space-y-6">
             {/* Brand Name */}
             <div className="text-center">
-              <h1 className="text-3xl xs:text-2xl font-black text-white tracking-tight mb-2">
+              <h1 className="text-xl xs:text-2xl sm:text-3xl font-black text-white tracking-tight mb-1 xs:mb-2">
                 WaguRoom
               </h1>
-              <div className="flex items-center justify-center gap-2 text-sm text-white/40">
-                <div className="w-1.5 h-1.5 bg-white rounded-full animate-pulse" />
+              <div className="flex items-center justify-center gap-2 text-xs xs:text-sm text-white/40">
+                <div className="w-1 h-1 xs:w-1.5 xs:h-1.5 bg-white rounded-full animate-pulse" />
                 <span>Loading</span>
               </div>
             </div>
 
             {/* Minimal Progress Bar */}
-            <div className="relative h-1 bg-white/10 rounded-full overflow-hidden">
+            <div className="relative h-0.5 xs:h-1 bg-white/10 rounded-full overflow-hidden">
               <div
                 className="absolute inset-y-0 left-0 bg-white rounded-full transition-all duration-300 ease-out"
                 style={{ width: "0%" }}
@@ -111,7 +111,7 @@ export default function Loading({ onLoadingComplete }: LoadingProps) {
 
   return (
     <div
-      className={`fixed inset-0 z-[9999] flex items-center justify-center bg-black transition-opacity duration-500 ${
+      className={`fixed inset-0 z-[9999] flex items-center justify-center bg-black transition-opacity duration-500 px-4 sm:px-6 ${
         isComplete ? "opacity-0 pointer-events-none" : "opacity-100"
       }`}
     >
@@ -124,35 +124,35 @@ export default function Loading({ onLoadingComplete }: LoadingProps) {
             linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
             linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)
           `,
-            backgroundSize: "50px 50px",
+            backgroundSize: "30px 30px",
           }}
         />
       </div>
 
       {/* Main Content */}
-      <div className="relative z-10 flex flex-col items-center gap-16 xs:gap-12">
+      <div className="relative z-10 flex flex-col items-center gap-8 xs:gap-6 sm:gap-10 md:gap-12 lg:gap-16">
         {/* Large Counter Display */}
         <div className="relative">
           {/* Counter Box */}
-          <div className="relative bg-white/5 backdrop-blur-sm border-2 border-white/20 rounded-2xl p-12 xs:p-8">
+          <div className="relative bg-white/5 backdrop-blur-sm border-2 border-white/20 rounded-xl xs:rounded-xl sm:rounded-2xl p-6 xs:p-8 sm:p-10 md:p-12">
             {/* Animated Corner Borders */}
-            <div className="absolute top-0 left-0 w-8 h-8 border-t-4 border-l-4 border-white rounded-tl-2xl animate-pulse-border" />
+            <div className="absolute top-0 left-0 w-4 h-4 xs:w-6 xs:h-6 sm:w-8 sm:h-8 border-t-2 border-l-2 xs:border-t-4 xs:border-l-4 border-white rounded-tl-xl xs:rounded-tl-2xl animate-pulse-border" />
             <div
-              className="absolute top-0 right-0 w-8 h-8 border-t-4 border-r-4 border-white rounded-tr-2xl animate-pulse-border"
+              className="absolute top-0 right-0 w-4 h-4 xs:w-6 xs:h-6 sm:w-8 sm:h-8 border-t-2 border-r-2 xs:border-t-4 xs:border-r-4 border-white rounded-tr-xl xs:rounded-tr-2xl animate-pulse-border"
               style={{ animationDelay: "0.2s" }}
             />
             <div
-              className="absolute bottom-0 left-0 w-8 h-8 border-b-4 border-l-4 border-white rounded-bl-2xl animate-pulse-border"
+              className="absolute bottom-0 left-0 w-4 h-4 xs:w-6 xs:h-6 sm:w-8 sm:h-8 border-b-2 border-l-2 xs:border-b-4 xs:border-l-4 border-white rounded-bl-xl xs:rounded-bl-2xl animate-pulse-border"
               style={{ animationDelay: "0.4s" }}
             />
             <div
-              className="absolute bottom-0 right-0 w-8 h-8 border-b-4 border-r-4 border-white rounded-br-2xl animate-pulse-border"
+              className="absolute bottom-0 right-0 w-4 h-4 xs:w-6 xs:h-6 sm:w-8 sm:h-8 border-b-2 border-r-2 xs:border-b-4 xs:border-r-4 border-white rounded-br-xl xs:rounded-br-2xl animate-pulse-border"
               style={{ animationDelay: "0.6s" }}
             />
 
-            <div className="text-center space-y-2">
+            <div className="text-center space-y-1 xs:space-y-2">
               {/* Large Number */}
-              <div className="font-mono text-8xl xs:text-6xl font-black text-white tracking-tighter relative">
+              <div className="font-mono text-5xl xs:text-6xl sm:text-7xl md:text-8xl font-black text-white tracking-tighter relative">
                 <span className="relative z-10">{Math.round(progress)}</span>
                 <span className="absolute inset-0 text-white/20 blur-md">
                   {Math.round(progress)}
@@ -160,7 +160,7 @@ export default function Loading({ onLoadingComplete }: LoadingProps) {
               </div>
 
               {/* Percentage Symbol */}
-              <div className="font-mono text-2xl xs:text-xl text-white/60">
+              <div className="font-mono text-lg xs:text-xl sm:text-2xl text-white/60">
                 %
               </div>
             </div>
@@ -168,22 +168,22 @@ export default function Loading({ onLoadingComplete }: LoadingProps) {
 
           {/* Orbiting Dots */}
           <div className="absolute inset-0 animate-orbit-slow">
-            <div className="absolute -top-2 left-1/2 -translate-x-1/2 w-4 h-4 bg-white rounded-full shadow-lg shadow-white/50" />
+            <div className="absolute -top-1 xs:-top-2 left-1/2 -translate-x-1/2 w-2 h-2 xs:w-3 xs:h-3 sm:w-4 sm:h-4 bg-white rounded-full shadow-lg shadow-white/50" />
           </div>
           <div className="absolute inset-0 animate-orbit-slow-reverse">
-            <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-4 h-4 bg-white rounded-full shadow-lg shadow-white/50" />
+            <div className="absolute -bottom-1 xs:-bottom-2 left-1/2 -translate-x-1/2 w-2 h-2 xs:w-3 xs:h-3 sm:w-4 sm:h-4 bg-white rounded-full shadow-lg shadow-white/50" />
           </div>
         </div>
 
         {/* Progress Information */}
-        <div className="w-96 xs:w-80 space-y-6">
+        <div className="w-full max-w-[280px] xs:max-w-[320px] sm:max-w-sm md:max-w-md lg:max-w-96 space-y-4 xs:space-y-5 sm:space-y-6">
           {/* Brand Name */}
           <div className="text-center">
-            <h1 className="text-3xl xs:text-2xl font-black text-white tracking-tight mb-2">
+            <h1 className="text-xl xs:text-2xl sm:text-3xl font-black text-white tracking-tight mb-1 xs:mb-2">
               WaguRoom
             </h1>
-            <div className="flex items-center justify-center gap-2 text-sm text-white/40">
-              <div className="w-1.5 h-1.5 bg-white rounded-full animate-pulse" />
+            <div className="flex items-center justify-center gap-1.5 xs:gap-2 text-xs xs:text-sm text-white/40">
+              <div className="w-1 h-1 xs:w-1.5 xs:h-1.5 bg-white rounded-full animate-pulse" />
               <span>Loading</span>
               <div className="flex gap-0.5">
                 <span className="animate-dot-1">.</span>
@@ -194,7 +194,7 @@ export default function Loading({ onLoadingComplete }: LoadingProps) {
           </div>
 
           {/* Minimal Progress Bar */}
-          <div className="relative h-1 bg-white/10 rounded-full overflow-hidden">
+          <div className="relative h-0.5 xs:h-1 bg-white/10 rounded-full overflow-hidden">
             <div
               className="absolute inset-y-0 left-0 bg-white rounded-full transition-all duration-300 ease-out"
               style={{ width: `${progress}%` }}
@@ -202,39 +202,45 @@ export default function Loading({ onLoadingComplete }: LoadingProps) {
           </div>
 
           {/* Loading Steps */}
-          <div className="grid grid-cols-3 gap-4 text-center text-xs text-white/40">
+          <div className="grid grid-cols-3 gap-2 xs:gap-3 sm:gap-4 text-center text-[10px] xs:text-xs text-white/40">
             <div
               className={`transition-all duration-300 ${progress > 30 ? "text-white" : ""}`}
             >
               <div
-                className={`w-2 h-2 mx-auto mb-2 rounded-full border-2 transition-all duration-300 ${progress > 30 ? "border-white bg-white" : "border-white/40"}`}
+                className={`w-1.5 h-1.5 xs:w-2 xs:h-2 mx-auto mb-1 xs:mb-2 rounded-full border border-white/40 xs:border-2 transition-all duration-300 ${progress > 30 ? "border-white bg-white" : ""}`}
               />
-              <span>Assets</span>
+              <span className="text-[9px] xs:text-[10px] sm:text-xs">
+                Assets
+              </span>
             </div>
             <div
               className={`transition-all duration-300 ${progress > 60 ? "text-white" : ""}`}
             >
               <div
-                className={`w-2 h-2 mx-auto mb-2 rounded-full border-2 transition-all duration-300 ${progress > 60 ? "border-white bg-white" : "border-white/40"}`}
+                className={`w-1.5 h-1.5 xs:w-2 xs:h-2 mx-auto mb-1 xs:mb-2 rounded-full border border-white/40 xs:border-2 transition-all duration-300 ${progress > 60 ? "border-white bg-white" : ""}`}
               />
-              <span>Scripts</span>
+              <span className="text-[9px] xs:text-[10px] sm:text-xs">
+                Scripts
+              </span>
             </div>
             <div
               className={`transition-all duration-300 ${progress > 90 ? "text-white" : ""}`}
             >
               <div
-                className={`w-2 h-2 mx-auto mb-2 rounded-full border-2 transition-all duration-300 ${progress > 90 ? "border-white bg-white" : "border-white/40"}`}
+                className={`w-1.5 h-1.5 xs:w-2 xs:h-2 mx-auto mb-1 xs:mb-2 rounded-full border border-white/40 xs:border-2 transition-all duration-300 ${progress > 90 ? "border-white bg-white" : ""}`}
               />
-              <span>Ready</span>
+              <span className="text-[9px] xs:text-[10px] sm:text-xs">
+                Ready
+              </span>
             </div>
           </div>
         </div>
 
         {/* Animated Lines */}
-        <div className="flex gap-2">
-          <div className="w-16 h-0.5 bg-white/20 animate-expand-1" />
-          <div className="w-16 h-0.5 bg-white/20 animate-expand-2" />
-          <div className="w-16 h-0.5 bg-white/20 animate-expand-3" />
+        <div className="flex gap-1.5 xs:gap-2">
+          <div className="w-10 xs:w-12 sm:w-16 h-0.5 bg-white/20 animate-expand-1" />
+          <div className="w-10 xs:w-12 sm:w-16 h-0.5 bg-white/20 animate-expand-2" />
+          <div className="w-10 xs:w-12 sm:w-16 h-0.5 bg-white/20 animate-expand-3" />
         </div>
       </div>
 
@@ -244,7 +250,7 @@ export default function Loading({ onLoadingComplete }: LoadingProps) {
           {particles.map((particle, i) => (
             <div
               key={i}
-              className="absolute w-1 h-1 bg-white/30 rounded-full animate-float-particle"
+              className="absolute w-0.5 h-0.5 xs:w-1 xs:h-1 bg-white/30 rounded-full animate-float-particle"
               style={{
                 left: `${particle.left}%`,
                 top: `${particle.top}%`,
